@@ -8,12 +8,16 @@ import api.pojo.Booking;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import listeners.ExtentReportExtension;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ExtendWith(ExtentReportExtension.class)
+@Tag("Booking_Regression")
 public class BookingTest {
 
  private static final Logger logger = LoggerFactory.getLogger(BookingTest.class);
@@ -31,7 +35,7 @@ public class BookingTest {
     @Test
     void getBooking() {
         Response response = RestAssured.given().contentType(ContentType.JSON)
-                .when().log().all().get("https://restful-booker.herokuapp.com/booking/1");
+                .when().log().all().get("https://restful-booker.herokuapp.com/booking/2");
         logger.info(response.asString());
         Assertions.assertNotNull(response);
         Assertions.assertEquals(200, response.statusCode(), "Get Booking Status Code is not 200");
